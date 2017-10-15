@@ -1,4 +1,4 @@
-import { async, inject, TestBed } from '@angular/core/testing'
+import { inject, TestBed } from '@angular/core/testing'
 
 import { IsAuthenticatedGuard } from '../is-authenticated.guard'
 

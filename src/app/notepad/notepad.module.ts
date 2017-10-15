@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router'
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 
 import { AuthModule } from '../auth/auth.module'
-import { ArrayFormatPipe } from './arrayFormat.pipe'
+import { ArrayFormatPipe } from './pipes/ArrayFormat.pipe'
 import { ImageExtractor } from './ImageExtractor'
 import { NewNoteComponent } from './new-note.component'
 import { NoteComponent } from './note.component'
