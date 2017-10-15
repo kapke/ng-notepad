@@ -37,4 +37,8 @@ export class NoteRepository {
 
         await this.currentUserList.push(data)
     }
+
+    public async deleteOfCurrentUser(note: Note): Promise<void> {
+        await this.currentUserList.remove(note.id)
+    }
 }
