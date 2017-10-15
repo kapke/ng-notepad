@@ -83,13 +83,13 @@
         "directive-selector": [
             true,
             "attribute",
-            "app",
+            "ntp",
             "camelCase"
         ],
         "component-selector": [
             true,
             "element",
-            "app",
+            "ntp",
             "kebab-case"
         ],
         "use-input-property-decorator": true,

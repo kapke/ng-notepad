@@ -6,12 +6,12 @@ import { Note } from './Note'
 import { NoteRepository } from './NoteRepository'
 
 @Component({
-    selector: 'app-notepad',
+    selector: 'ntp-notepad',
     template: `
         <div>
-            <app-user></app-user>
-            <app-new-note></app-new-note>
-            <app-note *ngFor="let note of notes$|async" [note]="note"></app-note>
+            <ntp-user></ntp-user>
+            <ntp-new-note></ntp-new-note>
+            <ntp-note *ngFor="let note of notes$|async" [note]="note"></ntp-note>
         </div>
   `,
     styles: [],
@@ -22,6 +22,6 @@ export class NotepadComponent implements OnInit {
     constructor(private noteRepository: NoteRepository) {}
 
     ngOnInit() {
-        this.notes$ = this.noteRepository.getCurrentUserNotes()
+        this.notes$ = this.noteRepository.getAll()
     }
 }

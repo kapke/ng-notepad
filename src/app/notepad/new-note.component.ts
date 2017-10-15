@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { Note } from './Note'
 import { NoteRepository } from './NoteRepository'
+import { TagParser } from './TagParser'
 
 @Component({
-    selector: 'app-new-note',
+    selector: 'ntp-new-note',
     template: `
         <form [formGroup]="newNoteForm" (ngSubmit)="addNote()">
             <mat-form-field>
@@ -35,12 +36,14 @@ export class NewNoteComponent {
     constructor(
         private formBuilder: FormBuilder,
         private noteRepository: NoteRepository,
+        private tagParser: TagParser,
     ) {}
 
     public async addNote() {
-        const note = new Note(this.newNoteForm.value)
+        const data = { ...this.newNoteForm.value }
+        data.tags = this.tagParser.parseTags(data.tags)
 
-        await this.noteRepository.addForCurrentUser(note)
+        await this.noteRepository.add(new Note(data))
 
         this.newNoteForm.setValue({ title: '', content: '', tags: '' })
     }

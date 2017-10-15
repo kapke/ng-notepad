@@ -4,7 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth'
 import { User } from 'firebase'
 
 @Component({
-    selector: 'app-user',
+    selector: 'ntp-user',
     template: `
         <mat-card class="user-card">
             <mat-card-title>

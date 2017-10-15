@@ -5,7 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase'
 
 @Component({
-    selector: 'app-login',
+    selector: 'ntp-login',
     template: `
         <button mat-raised-button class="google-sign-in" (click)="signInWithGoogle()">
             <img src="../../assets/google_signin_buttons/web/vector/btn_google_light_normal_ios.svg" alt="">
