@@ -55,4 +55,22 @@ export class NoteRepository {
     public async delete(note: Note): Promise<void> {
         await this.currentUserList.remove(note.id)
     }
+
+    public async searchWithPromise(query: string): Promise<List<Note>> {
+        const allNotes = await this.getAll().toPromise()
+
+        return this.filterNotes(query, allNotes)
+    }
+
+    public searchWithCallback(query: string, callback: (notes: List<Note>) => void): void {
+        this.searchWithPromise(query).then(callback)
+    }
+
+    public searchWithObservable(query$: Observable<string>): Observable<List<Note>> {
+        return query$.switchMap(query => this.searchWithPromise(query))
+    }
+
+    private filterNotes(query: string, notes: List<Note>): List<Note> {
+        return notes.filter(note => (note ? note.title.includes(query) : false)).toList()
+    }
 }

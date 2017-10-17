@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing'
+import { async, ComponentFixture, fakeAsync, inject, TestBed } from '@angular/core/testing'
 import { MatButton, MatButtonModule, MatCardModule } from '@angular/material'
 import { By } from '@angular/platform-browser'
 import { Deceiver } from 'deceiver-core'
@@ -52,8 +52,6 @@ describe('NoteComponent with TestBed', () => {
                 spyOn(noteRepository, 'delete').and.returnValue(Promise.resolve())
 
                 fixture.debugElement.query(By.directive(MatButton)).triggerEventHandler('click', {})
-
-                tick()
 
                 expect(noteRepository.delete).toHaveBeenCalledWith(component.note)
             }),
