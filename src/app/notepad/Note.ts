@@ -1,9 +1,9 @@
 import { Set } from 'immutable'
 
 export class Note {
-    public readonly id = ''
-    public readonly title = ''
-    public readonly content = ''
+    public readonly id: string = ''
+    public readonly title: string = ''
+    public readonly content: string = ''
     public readonly tags: Set<string> = Set<string>()
     public readonly images: Set<string> = Set<string>()
 

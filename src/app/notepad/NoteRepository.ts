@@ -35,9 +35,7 @@ export class NoteRepository {
                             new Note({
                                 ...item,
                                 tags: Set(item.tags),
-                                images: this.imageExtractor.extractImages(
-                                    item.content,
-                                ),
+                                images: this.imageExtractor.extractImages(item.content),
                             }),
                     ),
             )

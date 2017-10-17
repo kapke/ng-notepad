@@ -11,13 +11,13 @@ import { RouterModule } from '@angular/router'
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 
 import { AuthModule } from '../auth/auth.module'
-import { ArrayFormatPipe } from './pipes/ArrayFormat.pipe'
 import { ImageExtractor } from './ImageExtractor'
 import { NewNoteComponent } from './new-note.component'
 import { NoteComponent } from './note.component'
 import { NotepadComponent } from './notepad.component'
 import { notepadRoutes } from './notepad.routing'
 import { NoteRepository } from './NoteRepository'
+import { ArrayFormatPipe } from './pipes/ArrayFormat.pipe'
 import { TagParser } from './TagParser'
 
 @NgModule({
@@ -32,12 +32,7 @@ import { TagParser } from './TagParser'
         MatInputModule,
         ReactiveFormsModule,
     ],
-    declarations: [
-        NotepadComponent,
-        NoteComponent,
-        NewNoteComponent,
-        ArrayFormatPipe,
-    ],
+    declarations: [NotepadComponent, NoteComponent, NewNoteComponent, ArrayFormatPipe],
     providers: [NoteRepository, TagParser, ImageExtractor],
 })
 export class NotepadModule {}

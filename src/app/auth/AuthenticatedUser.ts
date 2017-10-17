@@ -5,8 +5,6 @@ import { User } from 'firebase'
 export type AuthenticatedUser = User
 export const AuthenticatedUser = new InjectionToken('AuthenticatedUser')
 
-export function authenticatedUserFactory(
-    afAuth: AngularFireAuth,
-): AuthenticatedUser | null {
+export function authenticatedUserFactory(afAuth: AngularFireAuth): AuthenticatedUser | null {
     return afAuth.auth.currentUser
 }

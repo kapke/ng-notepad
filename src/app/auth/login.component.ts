@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider
 import { Router } from '@angular/router'
 import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase'
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider
 
 @Component({
     selector: 'ntp-login',

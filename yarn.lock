@@ -244,6 +244,10 @@
   dependencies:
     "@types/jasmine" "*"
 
+"@types/lodash@^4.14.70":
+  version "4.14.77"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.77.tgz#0bc699413e84d6ed5d927ca30ea0f0a890b42d75"
+
 "@types/node@^6.0.46", "@types/node@~6.0.60":
   version "6.0.89"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.89.tgz#154be0e6a823760cd6083aa8c48f952e2e63e0b0"
@@ -1417,6 +1421,13 @@ debug@2.3.3:
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
+
+deceiver-core@^1.0.0-beta.6:
+  version "1.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/deceiver-core/-/deceiver-core-1.0.0-beta.6.tgz#7b28d62277d3333f2b2271e19cdd8cec9ad3b1ef"
+  dependencies:
+    "@types/lodash" "^4.14.70"
+    lodash "^4.17.4"
 
 deep-equal@^1.0.1:
   version "1.0.1"
