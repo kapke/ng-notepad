@@ -15,6 +15,7 @@
         "typeRoots": [
             "node_modules/@types"
         ],
+        "baseUrl": "./src",
         "lib": [
             "es5",
             "es2015",

@@ -73,7 +73,7 @@ describe('NoteRepository', () => {
             })
         }
 
-        it('like this is an antipattern', async () => {
+        it('tested like this is an antipattern though it simplifies actual test a lot', async () => {
             spyOn(noteRepository, 'getAll').and.returnValue(Observable.of(allNotes))
 
             const actual = await noteRepository.searchWithPromise('ba')
