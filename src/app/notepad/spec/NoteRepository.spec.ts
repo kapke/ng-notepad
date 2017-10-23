@@ -108,7 +108,7 @@ describe('NoteRepository', () => {
         })
 
         it('should search notes using observable implementation', done => {
-            const nextSpy = jasmine.createSpy('next').and.callFake((actual: List<Note>) => {
+            const nextSpy = jest.fn().mockImplementation((actual: List<Note>) => {
                 checkNotes(actual)
             })
 

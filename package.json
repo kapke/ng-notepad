@@ -7,6 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test --sourcemap=false",
+    "test:jest": "jest --watch",
     "lint": "ng lint",
     "serve:e2e": "ng serve --environment=e2e",
     "e2e": "ng e2e --environment=e2e --serve=false"
@@ -37,12 +38,16 @@
     "@angular/language-service": "^4.2.4",
     "@types/jasmine": "^2.5.53",
     "@types/jasminewd2": "~2.0.2",
+    "@types/jest": "^21.1.4",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.2.0",
     "deceiver-core": "^1.0.0-beta.6",
     "jasmine-core": "^2.8.0",
     "jasmine-marbles": "^0.2.0",
     "jasmine-spec-reporter": "~4.1.0",
+    "jest": "^21.2.1",
+    "jest-preset-angular": "^4.0.1",
+    "jsdom": "^11.3.0",
     "karma": "~1.7.0",
     "karma-chrome-launcher": "~2.1.1",
     "karma-cli": "~1.0.1",
@@ -58,5 +63,9 @@
     "tslint-config-prettier": "^1.5.0",
     "tslint-plugin-prettier": "^1.3.0",
     "typescript": "~2.3.3"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts"
   }
 }

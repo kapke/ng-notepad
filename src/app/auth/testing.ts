@@ -28,7 +28,10 @@ export function AuthenticatedUserSpy(
     ]
 
     return Object.assign(
-        jasmine.createSpyObj('authenticatedUser', methodNames),
+        methodNames.reduce<any>((acc, name) => {
+            acc[name] = jest.fn()
+            return acc;
+        }, {}),
         data,
-    )
+    ) as AuthenticatedUser
 }

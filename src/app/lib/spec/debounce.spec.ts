@@ -4,11 +4,11 @@ import { debounce } from '../debounce'
 
 describe('debounce', () => {
     beforeEach(() => {
-        jasmine.clock().install()
+        jest.useFakeTimers()
     })
 
     afterEach(() => {
-        jasmine.clock().uninstall()
+        jest.useRealTimers()
     })
 
     it('should call passed function with given timeout', () => {
@@ -18,7 +18,7 @@ describe('debounce', () => {
         debounced()
 
         expect(spy).not.toHaveBeenCalled()
-        jasmine.clock().tick(50)
+        jest.runTimersToTime(50)
         expect(spy).toHaveBeenCalled()
     })
 
@@ -30,7 +30,7 @@ describe('debounce', () => {
 
             debounced(...args)
 
-            jasmine.clock().tick(50)
+            jest.runTimersToTime(50)
             expect(spy).toHaveBeenCalledWith(...args)
         })
     })
@@ -44,7 +44,7 @@ describe('debounce', () => {
         debounced()
 
         expect(spy).not.toHaveBeenCalled()
-        jasmine.clock().tick(50)
+        jest.runTimersToTime(50)
         expect(spy).toHaveBeenCalledTimes(1)
     })
 
@@ -56,7 +56,7 @@ describe('debounce', () => {
         debounced('bar')
         debounced('baz')
 
-        jasmine.clock().tick(50)
+        jest.runTimersToTime(50)
         expect(spy).toHaveBeenCalledWith('baz')
     })
 })
