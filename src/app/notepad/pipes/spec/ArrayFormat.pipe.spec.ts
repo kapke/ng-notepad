@@ -33,15 +33,15 @@ describe('ArrayFormat Pipe', () => {
         const obj1 = {
             join: (_separator: string) => fooBarBaz,
         }
-        // const obj2 = Object.create(obj1)
+        const obj2 = Object.create(obj1)
 
         spyOn(obj1, 'join').and.callThrough()
 
         expect(arrayFormatPipe.transform(obj1)).toBe(fooBarBaz)
         expect(obj1.join).toHaveBeenCalledWith(', ')
-        // (obj1.join as jasmine.Spy).calls.reset()
-        // expect(arrayFormatPipe.transform(obj2)).toBe(fooBarBaz)
-        // expect(obj1.join).toHaveBeenCalledWith(', ')
+        ;(obj1.join as jasmine.Spy).calls.reset()
+        expect(arrayFormatPipe.transform(obj2)).toBe(fooBarBaz)
+        expect(obj1.join).toHaveBeenCalledWith(', ')
     })
 
     it('should pass input otherwise', () => {
