@@ -67,7 +67,7 @@ export class NoteRepository {
     }
 
     public searchWithObservable(query$: Observable<string>): Observable<List<Note>> {
-        return query$.switchMap(query => this.searchWithPromise(query))
+        return query$.switchMap(query => this.getAll().map(notes => this.filterNotes(query, notes)))
     }
 
     private filterNotes(query: string, notes: List<Note>): List<Note> {

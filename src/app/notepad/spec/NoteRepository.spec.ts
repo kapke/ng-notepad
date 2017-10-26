@@ -1,6 +1,7 @@
 import { AngularFireDatabase } from 'angularfire2/database'
 import { Deceiver } from 'deceiver-core'
 import { List } from 'immutable'
+import { Context, marbles } from 'rxjs-marbles'
 import { Observable } from 'rxjs/Observable'
 
 import { AuthenticatedUser } from 'app/auth'
@@ -115,9 +116,24 @@ describe('NoteRepository', () => {
             noteRepository
                 .searchWithObservable(Observable.from(['ba', 'b']))
                 .subscribe(nextSpy, fail, () => {
-                    expect(nextSpy).toHaveBeenCalledTimes(1)
+                    expect(nextSpy).toHaveBeenCalledTimes(2)
                     done()
                 })
         })
+
+        it(
+            'should search notes using observable implementation tested with marbles',
+            marbles((m: Context) => {
+                const values = { a: 'ba', b: 'b', r: expectedNotes.toArray() }
+                const input$ = m.cold('-a--b|', values)
+                const expected$ = m.cold('-r--r|', values)
+
+                const result$ = noteRepository
+                    .searchWithObservable(input$)
+                    .map(notes => notes.toArray())
+
+                m.equal(result$, expected$)
+            }),
+        )
     })
 })
