@@ -58,6 +58,7 @@
     "karma-opera-launcher": "^1.0.0",
     "prettier": "^1.7.4",
     "protractor": "~5.1.2",
+    "rxjs-marbles": "^2.1.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "tslint-config-prettier": "^1.5.0",
