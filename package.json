@@ -43,6 +43,7 @@
     "jasmine-core": "^2.8.0",
     "jasmine-marbles": "^0.2.0",
     "jasmine-spec-reporter": "~4.1.0",
+    "jsverify": "^0.8.3",
     "karma": "~1.7.0",
     "karma-chrome-launcher": "~2.1.1",
     "karma-cli": "~1.0.1",
