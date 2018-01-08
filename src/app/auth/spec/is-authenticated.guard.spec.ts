@@ -1,23 +1,31 @@
 import { Router } from '@angular/router'
 import { AngularFireAuth } from 'angularfire2/auth'
-import { Deceiver } from 'deceiver-core';
+import { Deceiver } from 'deceiver-core'
+import { User } from 'firebase'
+import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { Subject } from 'rxjs/Subject'
 
 import { IsAuthenticatedGuard } from '../is-authenticated.guard'
+import { AuthenticatedUserSpy } from '../testing';
 
 describe('IsAuthenticatedGuard', () => {
-    let authStateSubject: Subject<object | null>
+    let authStateSubject: Subject<User | null>
     let router: Router
     let afAuth: AngularFireAuth
     let guard: IsAuthenticatedGuard
 
     beforeEach(() => {
-        authStateSubject = new Subject<object>()
         router = jasmine.createSpyObj('router', ['navigate'])
         afAuth = Deceiver(AngularFireAuth, {
-            authState: authStateSubject,
+            get authState() {
+                return authStateSubject
+            },
         })
         guard = new IsAuthenticatedGuard(router, afAuth)
+    })
+
+    afterEach(() => {
+        authStateSubject = new Subject<User | null>()
     })
 
     it('should ...', () => {
@@ -25,6 +33,9 @@ describe('IsAuthenticatedGuard', () => {
     })
 
     it('should return observable with true when authState emits non null value', () => {
+        authStateSubject = new BehaviorSubject(AuthenticatedUserSpy())
+        authStateSubject.complete()
+
         const nextSpy: (val: boolean) => void = jasmine
             .createSpy('next')
             .and.callFake((val: boolean) => {
@@ -34,9 +45,6 @@ describe('IsAuthenticatedGuard', () => {
         guard.canActivate().subscribe(nextSpy, fail, () => {
             expect(nextSpy).toHaveBeenCalledTimes(1)
         })
-
-        authStateSubject.next({})
-        authStateSubject.complete()
     })
 
     it('should return observable with false when authState emits a null', () => {
@@ -46,29 +54,29 @@ describe('IsAuthenticatedGuard', () => {
                 expect(val).toBe(false)
             })
 
+        authStateSubject = new BehaviorSubject(null)
+        authStateSubject.complete()
+
         guard.canActivate().subscribe(nextSpy, fail, () => {
             expect(nextSpy).toHaveBeenCalledTimes(1)
         })
-
-        authStateSubject.next(null)
-        authStateSubject.complete()
     })
 
     it('should navigate to login page if user is not authenticated', () => {
+        authStateSubject = new BehaviorSubject(null)
+        authStateSubject.complete()
+
         guard.canActivate().subscribe(() => {
             expect(router.navigate).toHaveBeenCalledWith(['/login'])
         }, fail)
-
-        authStateSubject.next(null)
-        authStateSubject.complete()
     })
 
     it('should navigate to login page if user is not authenticated', () => {
+        authStateSubject = new BehaviorSubject(AuthenticatedUserSpy())
+        authStateSubject.complete()
+
         guard.canActivate().subscribe(() => {
             expect(router.navigate).not.toHaveBeenCalled()
         }, fail)
-
-        authStateSubject.next({})
-        authStateSubject.complete()
     })
 })
