@@ -1,91 +1,74 @@
-import { inject, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { AngularFireAuth } from 'angularfire2/auth'
+import { Deceiver } from 'deceiver-core';
 import { Subject } from 'rxjs/Subject'
 
 import { IsAuthenticatedGuard } from '../is-authenticated.guard'
 
 describe('IsAuthenticatedGuard', () => {
     let authStateSubject: Subject<object | null>
+    let router: Router
+    let afAuth: AngularFireAuth
+    let guard: IsAuthenticatedGuard
 
     beforeEach(() => {
         authStateSubject = new Subject<object>()
-    })
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                IsAuthenticatedGuard,
-                { provide: Router, useValue: jasmine.createSpyObj('router', ['navigate']) },
-                { provide: AngularFireAuth, useValue: { authState: authStateSubject } },
-            ],
+        router = jasmine.createSpyObj('router', ['navigate'])
+        afAuth = Deceiver(AngularFireAuth, {
+            authState: authStateSubject,
         })
+        guard = new IsAuthenticatedGuard(router, afAuth)
     })
 
-    it(
-        'should ...',
-        inject([IsAuthenticatedGuard], (guard: IsAuthenticatedGuard) => {
-            expect(guard).toBeTruthy()
-        }),
-    )
+    it('should ...', () => {
+        expect(guard).toBeTruthy()
+    })
 
-    it(
-        'should return observable with true when authState emits non null value',
-        inject([IsAuthenticatedGuard], (guard: IsAuthenticatedGuard) => {
-            const nextSpy: (val: boolean) => void = jasmine
-                .createSpy('next')
-                .and.callFake((val: boolean) => {
-                    expect(val).toBe(true)
-                })
-
-            guard.canActivate().subscribe(nextSpy, fail, () => {
-                expect(nextSpy).toHaveBeenCalledTimes(1)
+    it('should return observable with true when authState emits non null value', () => {
+        const nextSpy: (val: boolean) => void = jasmine
+            .createSpy('next')
+            .and.callFake((val: boolean) => {
+                expect(val).toBe(true)
             })
 
-            authStateSubject.next({})
-            authStateSubject.complete()
-        }),
-    )
+        guard.canActivate().subscribe(nextSpy, fail, () => {
+            expect(nextSpy).toHaveBeenCalledTimes(1)
+        })
 
-    it(
-        'should return observable with false when authState emits a null',
-        inject([IsAuthenticatedGuard], (guard: IsAuthenticatedGuard) => {
-            const nextSpy: (val: boolean) => void = jasmine
-                .createSpy('next')
-                .and.callFake((val: boolean) => {
-                    expect(val).toBe(false)
-                })
+        authStateSubject.next({})
+        authStateSubject.complete()
+    })
 
-            guard.canActivate().subscribe(nextSpy, fail, () => {
-                expect(nextSpy).toHaveBeenCalledTimes(1)
+    it('should return observable with false when authState emits a null', () => {
+        const nextSpy: (val: boolean) => void = jasmine
+            .createSpy('next')
+            .and.callFake((val: boolean) => {
+                expect(val).toBe(false)
             })
 
-            authStateSubject.next(null)
-            authStateSubject.complete()
-        }),
-    )
+        guard.canActivate().subscribe(nextSpy, fail, () => {
+            expect(nextSpy).toHaveBeenCalledTimes(1)
+        })
 
-    it(
-        'should navigate to login page if user is not authenticated',
-        inject([IsAuthenticatedGuard, Router], (guard: IsAuthenticatedGuard, router: Router) => {
-            guard.canActivate().subscribe(() => {
-                expect(router.navigate).toHaveBeenCalledWith(['/login'])
-            }, fail)
+        authStateSubject.next(null)
+        authStateSubject.complete()
+    })
 
-            authStateSubject.next(null)
-            authStateSubject.complete()
-        }),
-    )
+    it('should navigate to login page if user is not authenticated', () => {
+        guard.canActivate().subscribe(() => {
+            expect(router.navigate).toHaveBeenCalledWith(['/login'])
+        }, fail)
 
-    it(
-        'should navigate to login page if user is not authenticated',
-        inject([IsAuthenticatedGuard, Router], (guard: IsAuthenticatedGuard, router: Router) => {
-            guard.canActivate().subscribe(() => {
-                expect(router.navigate).not.toHaveBeenCalled()
-            }, fail)
+        authStateSubject.next(null)
+        authStateSubject.complete()
+    })
 
-            authStateSubject.next({})
-            authStateSubject.complete()
-        }),
-    )
+    it('should navigate to login page if user is not authenticated', () => {
+        guard.canActivate().subscribe(() => {
+            expect(router.navigate).not.toHaveBeenCalled()
+        }, fail)
+
+        authStateSubject.next({})
+        authStateSubject.complete()
+    })
 })
