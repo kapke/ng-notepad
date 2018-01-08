@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable'
 export class IsAuthenticatedGuard implements CanActivate {
     constructor(private router: Router, private afAuth: AngularFireAuth) {}
 
-    canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+    canActivate(): Observable<boolean> {
         return this.afAuth.authState
             .map((user: User | null) => user != null)
             .do((result: boolean) => {

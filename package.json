@@ -39,7 +39,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.2.0",
-    "deceiver-core": "^1.0.0-beta.6",
+    "deceiver-core": "^1.0.0-beta.7",
     "jasmine-core": "^2.8.0",
     "jasmine-marbles": "^0.2.0",
     "jasmine-spec-reporter": "~4.1.0",
