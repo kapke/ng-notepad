@@ -33,7 +33,7 @@ export class GoogleAuth {
     public clickPasswordNext() {
         const passwordNext = $('#passwordNext')
         browser.wait(until.elementToBeClickable(passwordNext))
-        browser.sleep(1000) // There is something on google site that forces us to wait until actual click is made
+        browser.sleep(1000) // There is something on google site that forces us to wait before actual click is made
         passwordNext.click()
     }
 

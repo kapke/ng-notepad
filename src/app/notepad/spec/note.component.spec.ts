@@ -96,6 +96,10 @@ describe('NoteComponent without TestBed', () => {
         component = new NoteComponent(noteRepository)
     })
 
+    it('should be created', () => {
+        expect(component).toBeTruthy()
+    })
+
     it('should delete a note', async () => {
         spyOn(noteRepository, 'delete').and.returnValue(Promise.resolve())
         const note = new Note({ id: '42' })
