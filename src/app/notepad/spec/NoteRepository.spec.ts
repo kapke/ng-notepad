@@ -1,8 +1,9 @@
 import { AngularFireDatabase } from 'angularfire2/database'
 import { Deceiver } from 'deceiver-core'
 import { List } from 'immutable'
+import { from, of } from 'rxjs'
 import { Context, marbles } from 'rxjs-marbles'
-import { Observable } from 'rxjs/Observable'
+import { map } from 'rxjs/operators';
 
 import { AuthenticatedUser } from 'app/auth'
 import { AuthenticatedUserSpy } from 'app/auth/testing'
@@ -34,7 +35,7 @@ describe('NoteRepository', () => {
 
             spyOn(angularFireDb, 'list').and.returnValue({
                 snapshotChanges() {
-                    return Observable.of([
+                    return of([
                         {
                             payload: {
                                 key: '42',
@@ -75,7 +76,7 @@ describe('NoteRepository', () => {
         }
 
         it('tested like this is an antipattern though it simplifies actual test a lot', async () => {
-            spyOn(noteRepository, 'getAll').and.returnValue(Observable.of(allNotes))
+            spyOn(noteRepository, 'getAll').and.returnValue(of(allNotes))
 
             const actual = await noteRepository.searchWithPromise('ba')
 
@@ -113,24 +114,21 @@ describe('NoteRepository', () => {
                 checkNotes(actual)
             })
 
-            noteRepository
-                .searchWithObservable(Observable.from(['ba', 'b']))
-                .subscribe(nextSpy, fail, () => {
-                    expect(nextSpy).toHaveBeenCalledTimes(2)
-                    done()
-                })
+            noteRepository.searchWithObservable(from(['ba', 'b'])).subscribe(nextSpy, fail, () => {
+                expect(nextSpy).toHaveBeenCalledTimes(2)
+                done()
+            })
         })
 
         it(
             'should search notes using observable implementation tested with marbles',
             marbles((m: Context) => {
-                const values = { a: 'ba', b: 'b', r: expectedNotes.toArray() }
-                const input$ = m.cold('-a--b|', values)
-                const expected$ = m.cold('-r--r|', values)
+                const input$ = m.cold('-a--b|', { a: 'ba', b: 'b' })
+                const expected$ = m.cold('-r--r|', { r: expectedNotes.toArray() })
 
                 const result$ = noteRepository
                     .searchWithObservable(input$)
-                    .map(notes => notes.toArray())
+                    .pipe(map(notes => notes.toArray()))
 
                 m.equal(result$, expected$)
             }),
