@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { List } from 'immutable'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 
 import { Note } from './Note'
 import { NoteRepository } from './NoteRepository'
@@ -17,7 +17,7 @@ import { NoteRepository } from './NoteRepository'
     styles: [],
 })
 export class NotepadComponent implements OnInit {
-    public notes$: Observable<List<Note>>
+    public notes$!: Observable<List<Note>>
 
     constructor(private noteRepository: NoteRepository) {}
 

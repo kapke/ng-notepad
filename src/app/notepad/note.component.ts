@@ -23,7 +23,7 @@ import { NoteRepository } from './NoteRepository'
     styles: [],
 })
 export class NoteComponent {
-    @Input() public note: Note
+    @Input() public note!: Note
 
     constructor(private noteRepository: NoteRepository) {}
 

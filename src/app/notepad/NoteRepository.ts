@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core'
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database'
 import { List, Seq, Set } from 'immutable'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
+import { map, switchMap } from 'rxjs/operators'
 
 import { AuthenticatedUser } from 'app/auth'
 import { ImageExtractor } from './ImageExtractor'
@@ -20,26 +21,29 @@ export class NoteRepository {
     }
 
     public getAll(): Observable<List<Note>> {
-        return this.currentUserList
-            .snapshotChanges()
-            .map(Seq)
-            .map(data =>
+        return this.currentUserList.snapshotChanges().pipe(
+            map(items => Seq(items)),
+            map(data =>
                 data
                     .filter(item => !!item)
-                    .map(item => ({
-                        id: item!.payload!.key,
-                        ...item!.payload!.val(),
-                    }))
+                    .map(
+                        item =>
+                            ({
+                                id: item!.payload!.key,
+                                ...item!.payload!.val(),
+                            } as Partial<Note>),
+                    )
                     .map(
                         item =>
                             new Note({
-                                ...item,
-                                tags: Set(item.tags),
-                                images: this.imageExtractor.extractImages(item.content),
+                                ...item!,
+                                tags: Set(item!.tags!),
+                                images: this.imageExtractor.extractImages(item!.content! || ''),
                             }),
                     ),
-            )
-            .map(List)
+            ),
+            map(notes => List(notes)),
+        )
     }
 
     public async add(note: Note): Promise<void> {
@@ -67,7 +71,9 @@ export class NoteRepository {
     }
 
     public searchWithObservable(query$: Observable<string>): Observable<List<Note>> {
-        return query$.switchMap(query => this.getAll().map(notes => this.filterNotes(query, notes)))
+        return query$.pipe(
+            switchMap(query => this.getAll().pipe(map(notes => this.filterNotes(query, notes)))),
+        )
     }
 
     private filterNotes(query: string, notes: List<Note>): List<Note> {
