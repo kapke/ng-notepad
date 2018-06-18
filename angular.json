@@ -114,6 +114,11 @@
           "options": {
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "notepad:serve"
+          },
+          "configurations": {
+            "dev": {
+              "devServerTarget": ""
+            }
           }
         },
         "lint": {
