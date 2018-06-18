@@ -38,7 +38,7 @@ export class GoogleAuth {
     }
 
     public waitForLoggedInPage () {
-        browser.wait(until.textToBePresentInElement($('h1'), 'Moje konto'))
+        browser.wait(until.textToBePresentInElement($('h1'), 'Konto Google'))
     }
 
     selectTestingUser() {

@@ -9,8 +9,8 @@
     "test": "ng test",
     "test:jest": "jest --watch",
     "lint": "ng lint",
-    "serve:e2e": "ng serve --environment=e2e",
-    "e2e": "ng e2e --environment=e2e --serve=false"
+    "serve:e2e": "ng serve --configuration=e2e",
+    "e2e": "ng e2e --configuration=dev"
   },
   "private": true,
   "dependencies": {
