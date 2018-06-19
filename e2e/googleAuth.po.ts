@@ -4,7 +4,7 @@ export class GoogleAuth {
     public url = 'https://accounts.google.com/signin'
     public testingUser = {
         mail: 'kapke.testing@gmail.com',
-        password: 'alamakota',
+        password: 'Zaq1@wsx',
     }
 
     public loginAsTestGoogleUser() {

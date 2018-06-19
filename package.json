@@ -10,7 +10,8 @@
     "test:jest": "jest --watch",
     "lint": "ng lint",
     "serve:e2e": "ng serve --configuration=e2e",
-    "e2e": "ng e2e --configuration=dev"
+    "e2e": "ng e2e --configuration=dev",
+    "e2e:debug": "node --inspect-brk ./node_modules/protractor/bin/protractor ./protractor.conf.js"
   },
   "private": true,
   "dependencies": {
