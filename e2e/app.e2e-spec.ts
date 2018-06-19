@@ -42,6 +42,7 @@ describe('notepad App', () => {
         app.navigateTo()
 
         notepad.waitUntilDisplayed()
+
         expect(notepad.isDisplayed()).toBe(true)
     })
 })
